@@ -65,8 +65,8 @@ const MyTeams = () => {
 			return {
 				name: decodeURIComponent(user.nick_name),
 				id: user.id,
-				coin: user.total_use_coin,
-				target: user.salary_info.target_target_point,
+				coin: user.receive_coin,
+				target: user.salary_info.target_point,
 				base_pay: user.salary_info.base_pay,
 				day_bonus: user.salary_info.day_bonus,
 				extra_bonus: user.salary_info.extra_bonus,
