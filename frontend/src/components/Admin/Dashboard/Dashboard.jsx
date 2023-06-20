@@ -2,6 +2,7 @@ import React from 'react';
 import FadeLoader from 'react-spinners/FadeLoader';
 import DashboardLayout from '../layouts/DashboardLayout';
 import {
+	useGetTop50HostAdminQuery,
 	useGetTopAgentAdminQuery,
 	useGetTopHostAdminQuery,
 } from '../../../features/admin/adminApi';
@@ -12,8 +13,8 @@ import TopHost from './TopHost';
 const AdminDashboard = ({ user }) => {
 	const { data: topData, isLoading: top5Loading } = useGetTopAgentAdminQuery();
 	const { topUsers } = topData || {};
-	const { data: top10, isLoading: top10Loading } = useGetTopHostAdminQuery();
-	const { top10Host } = top10 || {};
+	const { data: top10, isLoading: top10Loading } = useGetTop50HostAdminQuery();
+	const { topHosts, length } = top10 || {};
 
 	return (
 		<DashboardLayout>
@@ -42,7 +43,7 @@ const AdminDashboard = ({ user }) => {
 
 					<div>
 						<h2 className='my-4 text-2xl font-semibold text-center '>
-							Top 10 Hosts
+							Top {length} Hosts
 						</h2>
 						<div className='grid grid-cols-1 gap-4 md:grid-cols-4 '>
 							{top10Loading ? (
@@ -50,8 +51,8 @@ const AdminDashboard = ({ user }) => {
 									<FadeLoader color={'#fbbf24'} />
 								</div>
 							) : (
-								top10Host?.map((host, i) => (
-									<TopHost key={host._id} host={host} index={i} />
+								topHosts?.map((host, i) => (
+									<TopHost key={host.id} host={host} index={i} />
 								))
 							)}
 						</div>

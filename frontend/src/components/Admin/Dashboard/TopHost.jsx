@@ -22,7 +22,7 @@ const TopHost = ({ host, index }) => {
 					<p className='text-xs italic font-semibold '>
 						Total Coins:{' '}
 						<span className='text-yellow-400'>
-							{Number(host?.receive_coin).toLocaleString()}
+							{Number(host?.receive_coins).toLocaleString()}
 						</span>
 					</p>
 				</div>

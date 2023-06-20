@@ -748,7 +748,6 @@ exports.resetPasswordAdmin = catchAsyncErrors(async (req, res, next) => {
 // get mysql users
 exports.getMySQLUsers = catchAsyncErrors(async (req, res, next) => {
 	const query = 'SELECT * FROM bogo_user';
-	console.log(query);
 
 	if (!query) {
 		return next(new Error('Query not found'));
@@ -759,7 +758,7 @@ exports.getMySQLUsers = catchAsyncErrors(async (req, res, next) => {
 			return next(err);
 		}
 
-		console.log(result.length);
+		// console.log(result.length);
 
 		const users = result.map((user) => ({
 			id: user.id,
@@ -780,6 +779,77 @@ exports.getMySQLUsers = catchAsyncErrors(async (req, res, next) => {
 			receiveCoins,
 			diamonds,
 			users,
+		});
+	});
+});
+
+// get top hosts
+exports.getTopHosts = catchAsyncErrors(async (req, res, next) => {
+	const query = 'SELECT * FROM bogo_user';
+
+	if (!query) {
+		return next(new Error('Query not found'));
+	}
+
+	const nickNameUTF8 = (name) => {
+		const nickName = name.replace(/\[/g, '').replace(/\]/g, '');
+		const emoji = nickName.replace(/EMOJI:/g, '');
+		const emojiText = emoji.replace(/:/g, '');
+		return emojiText;
+	};
+
+	mysqlDB.query(query, (err, result) => {
+		const users = result.map((user) => ({
+			id: user.id,
+			nick_name: nickNameUTF8(user.nick_name),
+			receive_coins: user.ticket,
+		}));
+
+		// get top 50 hosts
+		const topHosts = users
+			.sort((a, b) => b.receive_coins - a.receive_coins)
+			.slice(0, 50);
+
+		res.status(200).json({
+			success: true,
+			message: 'Users retrieved successfully',
+			length: topHosts.length,
+			topHosts,
+		});
+	});
+});
+
+// get top family
+exports.getTopFamily = catchAsyncErrors(async (req, res, next) => {
+	const query = 'SELECT * FROM bogo_family';
+
+	if (!query) {
+		return next(new Error('Query not found'));
+	}
+
+	let topFamilies = [];
+
+	mysqlDB.query(query, (err, result) => {
+		for (let i = 0; i < result.length; i++) {
+			const family = result[i];
+			let familyCoins = 0;
+			const query2 = `SELECT * FROM bogo_user WHERE family_id = ${family.id}`;
+			mysqlDB.query(query2, (err, result2) => {
+				for (let j = 0; j < result2.length; j++) {
+					const user = result[j];
+					familyCoins += user.ticket;
+				}
+				console.log(family.name);
+			});
+		}
+
+		topFamilies = topFamilies.sort((a, b) => b.coins - a.coins).slice(0, 50);
+
+		res.status(200).json({
+			success: true,
+			message: 'Users retrieved successfully',
+			length: topFamilies.length,
+			topFamilies,
 		});
 	});
 });

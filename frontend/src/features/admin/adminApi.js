@@ -64,6 +64,12 @@ export const adminApi = apiSlice.injectEndpoints({
 			query: () => '/mysql-coins',
 			providesTags: ['Coins'],
 		}),
+
+		// top 50 host
+		getTop50HostAdmin: builder.query({
+			query: () => '/top-hosts',
+			providesTags: ['Top50Host'],
+		}),
 	}),
 });
 
@@ -78,4 +84,5 @@ export const {
 	useResetPasswordAdminMutation,
 	useGetAllHostAdminQuery,
 	useGetCoinsAdminQuery,
+	useGetTop50HostAdminQuery,
 } = adminApi;
