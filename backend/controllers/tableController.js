@@ -408,6 +408,7 @@ exports.createNewHost = catchAsyncErrors(async (req, res, next) => {
 		let merchant_total = 0;
 		let motivator_bonus = 0;
 		let target_point = 0;
+		let diamonds = 0;
 
 		if (numTicket >= 50000 && numTicket <= 249999) {
 			// if (user.id === '217981') {
@@ -572,7 +573,7 @@ exports.createNewHost = catchAsyncErrors(async (req, res, next) => {
 			merchant_total = merchant_pay + merchant_extra;
 			grosSalary = base_pay + day_bonus + extra_bonus + motivator_bonus;
 			target_point = 7000000;
-		} else if (numTicket >= 8500000 && numTicket < 109999999) {
+		} else if (numTicket >= 8500000 && numTicket < 10999999) {
 			netAmount = 8500000 - 8500000 * 0.13;
 			extra = numTicket - 8500000;
 			salary_amount = netAmount * 0.02;
@@ -715,6 +716,7 @@ exports.createNewHost = catchAsyncErrors(async (req, res, next) => {
 			nick_name: emojiText,
 			coin: user.diamonds,
 			receive_coin: user.ticket,
+			diamonds: user.diamonds,
 			total_use_coin: user.use_diamonds,
 			family_id: user.family_id,
 			avatar_url: user.identify_hold_image,
@@ -744,13 +746,13 @@ exports.createNewHost = catchAsyncErrors(async (req, res, next) => {
 
 	res.status(201).json({
 		success: true,
-		users,
+		users: dataUsers,
 	});
 });
 
 // top 10 host by receive coin
 exports.top10HostByReceiveCoin = catchAsyncErrors(async (req, res, next) => {
-	const hosts = await Host.find().sort({ receive_coin: -1 }).limit(10);
+	const hosts = await Host.find().sort({ receive_coin: -1 }).limit(50);
 
 	res.status(200).json({
 		success: true,

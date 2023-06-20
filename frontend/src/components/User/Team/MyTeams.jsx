@@ -274,7 +274,7 @@ const MyTeams = () => {
 	hosts &&
 		hosts.map((user) => {
 			return rows.push({
-				id: user.id,
+				id: user._id,
 				serial: rows.length + 1,
 				name: user.nick_name,
 				coin: user.receive_coin,

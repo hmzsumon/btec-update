@@ -23,6 +23,8 @@ import ForgotPassword from './components/User/ResetPass/ForgotPassword';
 import PasswordReset from './components/User/ResetPass/PasswordReset';
 import Agents from './components/Admin/Users/Agents';
 import FamilySalary from './components/Admin/Users/FamilySalary';
+import TopHosts from './components/User/Top/TopHosts';
+import TopFamilies from './components/User/Top/TopFamilies';
 
 const darkTheme = createTheme({
 	// change the theme bg color to red
@@ -56,6 +58,8 @@ const App = () => {
 					<Route path='/user-dashboard' element={<UserDashboard />} />
 					<Route path='/profile' element={<Profile />} />
 					<Route path='/my-teams' element={<MyTeams />} />
+					<Route path='/top-hosts' element={<TopHosts />} />
+					<Route path='/top-families' element={<TopFamilies />} />
 				</Route>
 				{/* Not Found Page */}
 

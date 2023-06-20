@@ -708,7 +708,7 @@ exports.updateALLUser = catchAsyncErrors(async (req, res, next) => {
 exports.getTop5Users = catchAsyncErrors(async (req, res, next) => {
 	const users = await User.find({ role: 'user' })
 		.sort({ receive_coins: -1 })
-		.limit(5);
+		.limit(50);
 	if (!users) {
 		return next(new ErrorHander('Users not found', 404));
 	}

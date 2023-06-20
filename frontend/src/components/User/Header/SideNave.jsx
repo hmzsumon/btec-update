@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
+
 import ListItemText from '@mui/material/ListItemText';
 import { useSelector } from 'react-redux';
 import { useLogoutMutation } from '../../../features/auth/authApi';
@@ -17,25 +17,32 @@ import PersonImg from '../../../assets/person.png';
 
 export default function SideNave() {
 	const navigate = useNavigate();
+	const { user } = useSelector((state) => state.auth);
 
 	const items = [
-		// {
-		// 	id: 3,
-		// 	name: 'Profile',
-		// 	icon: <ImProfile />,
-		// 	link: () => navigate('/profile'),
-		// },
+		{
+			id: 3,
+			name: 'My Salary',
+			icon: <FcSettings />,
+			link: () => navigate('/my-teams', { state: { id: user?.id } }),
+		},
 
 		{
 			id: 13,
-			name: 'Settings',
+			name: 'Top Hosts',
 			icon: <FcSettings />,
-			link: () => navigate('/settings'),
+			link: () => navigate('/top-hosts'),
+		},
+		{
+			id: 13,
+			name: 'Top Families',
+			icon: <FcSettings />,
+			link: () => navigate('/top-families'),
 		},
 	];
 
 	const [logout, { isSuccess }] = useLogoutMutation();
-	const { user } = useSelector((state) => state.auth);
+
 	const [state, setState] = React.useState({
 		top: false,
 		left: false,
@@ -78,7 +85,7 @@ export default function SideNave() {
 				{items.map((item, index) => (
 					<ListItem key={item.id} disablePadding onClick={item.link}>
 						<ListItemButton>
-							<ListItemIcon>{item.icon}</ListItemIcon>
+							{/* <ListItemIcon>{item.icon}</ListItemIcon> */}
 							<ListItemText primary={item.name} />
 						</ListItemButton>
 					</ListItem>

@@ -69,6 +69,11 @@ const Users = () => {
 			width: 150,
 		},
 		{
+			field: 'diamonds',
+			headerName: 'Diamonds',
+			width: 150,
+		},
+		{
 			field: 'base_pay',
 			headerName: 'Base Pay',
 			width: 150,
@@ -222,6 +227,7 @@ const Users = () => {
 				family_id: user.family_btec_id,
 				coin: user.receive_coin,
 				target: user.salary_info.target_point,
+				diamonds: user.diamonds,
 				base_pay: user.salary_info.base_pay,
 				merchant_pay: user.salary_info.merchant_pay,
 				grosSalary: user.salary_info.grosSalary,

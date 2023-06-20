@@ -22,6 +22,10 @@ const hostSchema = new Schema(
 			type: Number,
 			default: 0,
 		},
+		diamonds: {
+			type: Number,
+			default: 0,
+		},
 		total_use_coin: {
 			type: Number,
 			default: 0,
