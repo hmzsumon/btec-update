@@ -18,6 +18,9 @@ if (process.env.NODE_ENV !== 'PRODUCTION') {
 // database connection
 connectDB();
 
+// mySql database connection
+// const mysqlDB = require('./config/dbsql');
+
 //cloudinary
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_NAME,

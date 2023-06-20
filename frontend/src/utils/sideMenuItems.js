@@ -1,5 +1,7 @@
 import { FiUsers } from 'react-icons/fi';
 import { MdOutlineDashboard, MdPassword } from 'react-icons/md';
+import { FaCoins } from 'react-icons/fa';
+import { GrUserFemale } from 'react-icons/gr';
 
 const sideMenuItems = [
 	{
@@ -26,7 +28,7 @@ const sideMenuItems = [
 	{
 		id: 4,
 		name: 'Users',
-		icon: <FiUsers />,
+		icon: <GrUserFemale />,
 		path: '/admin/users',
 		role: 'all',
 	},
@@ -37,6 +39,13 @@ const sideMenuItems = [
 		icon: <FiUsers />,
 		path: '/admin/agents',
 		role: 'admin',
+	},
+
+	{
+		id: 6,
+		name: 'Coins Calculator',
+		icon: <FaCoins />,
+		path: '/admin/coins',
 	},
 
 	{

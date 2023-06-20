@@ -6,7 +6,7 @@ const { sendEmail } = require('../utils/sendEmail');
 const crypto = require('crypto');
 const cloudinary = require('cloudinary');
 const { v4: uuidv4 } = require('uuid');
-
+const mysqlDB = require('../config/dbsql');
 const Company = require('../models/companyModel');
 const companyId = process.env.COMPANY_ID;
 const Family = require('../models/familyModel');
@@ -742,5 +742,44 @@ exports.resetPasswordAdmin = catchAsyncErrors(async (req, res, next) => {
 	res.status(200).json({
 		success: true,
 		message: 'Password updated successfully',
+	});
+});
+
+// get mysql users
+exports.getMySQLUsers = catchAsyncErrors(async (req, res, next) => {
+	const query = 'SELECT * FROM bogo_user';
+	console.log(query);
+
+	if (!query) {
+		return next(new Error('Query not found'));
+	}
+
+	mysqlDB.query(query, (err, result) => {
+		if (err) {
+			return next(err);
+		}
+
+		console.log(result.length);
+
+		const users = result.map((user) => ({
+			id: user.id,
+			nick_name: user.nick_name,
+			receive_coins: user.ticket,
+			diamonds: user.diamonds,
+		}));
+
+		const receiveCoins = users.reduce(
+			(acc, user) => acc + user.receive_coins,
+			0
+		);
+		const diamonds = users.reduce((acc, user) => acc + user.diamonds, 0);
+
+		res.status(200).json({
+			success: true,
+			message: 'Users retrieved successfully',
+			receiveCoins,
+			diamonds,
+			users,
+		});
 	});
 });

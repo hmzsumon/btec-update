@@ -25,6 +25,7 @@ import Agents from './components/Admin/Users/Agents';
 import FamilySalary from './components/Admin/Users/FamilySalary';
 import TopHosts from './components/User/Top/TopHosts';
 import TopFamilies from './components/User/Top/TopFamilies';
+import Coins from './components/Admin/Coins/Coins';
 
 const darkTheme = createTheme({
 	// change the theme bg color to red
@@ -52,6 +53,7 @@ const App = () => {
 					<Route path='/admin/agents' element={<Agents />} />
 					<Route path='/family/:id' element={<FamilySalary />} />
 					<Route path='/admin/update-password' element={<PasswordReset />} />
+					<Route path='/admin/coins' element={<Coins />} />
 				</Route>
 				{/* User Route */}
 				<Route element={<PrivetRoute />}>

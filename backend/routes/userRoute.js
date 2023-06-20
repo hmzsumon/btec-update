@@ -9,6 +9,7 @@ const {
 	updateALLUser,
 	getTop5Users,
 	resetPasswordAdmin,
+	getMySQLUsers,
 } = require('../controllers/userController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
@@ -45,5 +46,8 @@ router
 		authorizeRoles('admin'),
 		resetPasswordAdmin
 	);
+
+// get all users from mysql
+router.route('/mysql-coins').get(getMySQLUsers);
 
 module.exports = router;

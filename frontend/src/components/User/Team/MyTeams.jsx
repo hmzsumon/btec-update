@@ -131,7 +131,7 @@ const MyTeams = () => {
 		},
 
 		{
-			field: 'id',
+			field: 'bteckId',
 			headerName: 'Bteclive ID',
 			description: 'This column has a value getter and is not sortable.',
 			sortable: false,
@@ -275,6 +275,7 @@ const MyTeams = () => {
 		hosts.map((user) => {
 			return rows.push({
 				id: user._id,
+				bteckId: user.id,
 				serial: rows.length + 1,
 				name: user.nick_name,
 				coin: user.receive_coin,
