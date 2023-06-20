@@ -181,7 +181,7 @@ const Agents = () => {
 						<div className='p-3 my-6 border'>
 							<div className='space-y-3 text-xs '>
 								<h2 className='text-sm italic text-center text-orange-300 '>
-									{formatDate('5-2-23')} To {formatDate('5-16-23')} Salary
+									{formatDate('6-2-23')} To {formatDate('6-16-23')} Salary
 									Information:
 								</h2>
 								<div className='grid grid-cols-2 list-none '>
