@@ -820,36 +820,53 @@ exports.getTopHosts = catchAsyncErrors(async (req, res, next) => {
 });
 
 // get top family
-exports.getTopFamily = catchAsyncErrors(async (req, res, next) => {
-	const query = 'SELECT * FROM bogo_family';
+exports.getTopFamilies = catchAsyncErrors(async (req, res, next) => {
+	const query = `
+    SELECT f.id, f.name, f.user_id, u.nick_name, SUM(u.ticket) as total_tickets
+    FROM bogo_family f
+    INNER JOIN bogo_user u ON f.id = u.family_id
+    GROUP BY f.id, f.name, f.user_id, u.nick_name
+    ORDER BY total_tickets DESC
+  `;
 
 	if (!query) {
 		return next(new Error('Query not found'));
 	}
 
-	let topFamilies = [];
-
 	mysqlDB.query(query, (err, result) => {
-		for (let i = 0; i < result.length; i++) {
-			const family = result[i];
-			let familyCoins = 0;
-			const query2 = `SELECT * FROM bogo_user WHERE family_id = ${family.id}`;
-			mysqlDB.query(query2, (err, result2) => {
-				for (let j = 0; j < result2.length; j++) {
-					const user = result[j];
-					familyCoins += user.ticket;
-				}
-				console.log(family.name);
-			});
+		if (err) {
+			return next(err);
 		}
 
-		topFamilies = topFamilies.sort((a, b) => b.coins - a.coins).slice(0, 50);
+		const topFamilies = result.reduce((accumulator, family) => {
+			const existingFamily = accumulator.find(
+				(f) => f.id === family.id && f.user_id === family.user_id
+			);
+
+			if (existingFamily) {
+				existingFamily.total_tickets += family.total_tickets;
+			} else {
+				accumulator.push({
+					id: family.id,
+					user_id: family.user_id,
+					name: family.name,
+					total_tickets: family.total_tickets,
+				});
+			}
+
+			return accumulator;
+		}, []);
+
+		const sortedFamilies = topFamilies.sort(
+			(a, b) => b.total_tickets - a.total_tickets
+		);
+
+		const top50Families = sortedFamilies.slice(0, 50);
 
 		res.status(200).json({
 			success: true,
-			message: 'Users retrieved successfully',
-			length: topFamilies.length,
-			topFamilies,
+			message: 'Top families retrieved successfully',
+			topFamilies: top50Families,
 		});
 	});
 });

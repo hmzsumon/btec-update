@@ -15,7 +15,7 @@ const TopCard = ({ agent, index }) => {
 				</div>
 				<div className='flex items-center justify-between'>
 					<p className='text-xs italic font-semibold'>
-						Total Coins: {Number(agent?.receive_coins).toLocaleString()}
+						Total Coins: {Number(agent?.total_tickets).toLocaleString()}
 					</p>
 				</div>
 			</div>

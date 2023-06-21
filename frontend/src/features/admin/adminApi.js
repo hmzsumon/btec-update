@@ -70,6 +70,12 @@ export const adminApi = apiSlice.injectEndpoints({
 			query: () => '/top-hosts',
 			providesTags: ['Top50Host'],
 		}),
+
+		// top 50 families
+		getTop50FamilyAdmin: builder.query({
+			query: () => '/top-family',
+			providesTags: ['Top50Family'],
+		}),
 	}),
 });
 
@@ -85,4 +91,5 @@ export const {
 	useGetAllHostAdminQuery,
 	useGetCoinsAdminQuery,
 	useGetTop50HostAdminQuery,
+	useGetTop50FamilyAdminQuery,
 } = adminApi;

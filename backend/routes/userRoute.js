@@ -11,7 +11,7 @@ const {
 	resetPasswordAdmin,
 	getMySQLUsers,
 	getTopHosts,
-	getTopFamily,
+	getTopFamilies,
 } = require('../controllers/userController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
@@ -56,6 +56,6 @@ router.route('/mysql-coins').get(getMySQLUsers);
 router.route('/top-hosts').get(getTopHosts);
 
 // get top family
-router.route('/top-family').get(getTopFamily);
+router.route('/top-family').get(getTopFamilies);
 
 module.exports = router;

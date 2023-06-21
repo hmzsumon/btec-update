@@ -1,12 +1,13 @@
 import React from 'react';
 import Layout from '../Layout/Layout';
-import { useGetTopAgentAdminQuery } from '../../../features/admin/adminApi';
+import { useGetTop50FamilyAdminQuery } from '../../../features/admin/adminApi';
 import { FadeLoader } from 'react-spinners';
 import TopCard from '../../Admin/Dashboard/TopCard';
 
 const TopFamilies = () => {
-	const { data: topData, isLoading: top5Loading } = useGetTopAgentAdminQuery();
-	const { topUsers } = topData || {};
+	const { data: topData, isLoading: top5Loading } =
+		useGetTop50FamilyAdminQuery();
+	const { topFamilies } = topData || {};
 	return (
 		<Layout>
 			{top5Loading ? (
@@ -22,7 +23,7 @@ const TopFamilies = () => {
 								<FadeLoader color={'#fbbf24'} />
 							</div>
 						) : (
-							topUsers?.map((agent, i) => (
+							topFamilies?.map((agent, i) => (
 								<TopCard key={agent._id} agent={agent} index={i} />
 							))
 						)}
