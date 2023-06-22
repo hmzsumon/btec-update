@@ -57,16 +57,15 @@ const Coins = () => {
 				</div>
 			) : (
 				<div className='p-4'>
-					<div>
-						<h1 className='text-2xl font-semibold'>
+					<div className='space-y-2'>
+						<h1 className='  font-semibold'>
 							Total Receive Coins: {receiveCoins}
 						</h1>
-						<h1 className='text-2xl font-semibold'>
-							Total Diamonds: {diamonds}
+						<h1 className=' font-semibold'>Total Diamonds: {diamonds}</h1>
+						<h1 className=' font-semibold'>
+							Total Diamonds & Receive Coins: {diamonds + receiveCoins}
 						</h1>
-						<h1 className='text-2xl font-semibold'>
-							Total Hosts: {hosts?.length}
-						</h1>
+						<h1 className=' font-semibold'>Total Hosts: {hosts?.length}</h1>
 					</div>
 					<div className='w-full shadow-lg rounded-xl' style={{ height: 470 }}>
 						<DataGrid
