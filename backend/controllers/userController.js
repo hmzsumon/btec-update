@@ -760,12 +760,14 @@ exports.getMySQLUsers = catchAsyncErrors(async (req, res, next) => {
 
 		// console.log(result.length);
 
-		const users = result.map((user) => ({
-			id: user.id,
-			nick_name: user.nick_name,
-			receive_coins: user.ticket,
-			diamonds: user.diamonds,
-		}));
+		const users = result
+			.map((user) => ({
+				id: user.id,
+				nick_name: user.nick_name,
+				receive_coins: user.ticket,
+				diamonds: user.diamonds,
+			}))
+			.sort((a, b) => b.receive_coins - a.receive_coins);
 
 		const receiveCoins = users.reduce(
 			(acc, user) => acc + user.receive_coins,
