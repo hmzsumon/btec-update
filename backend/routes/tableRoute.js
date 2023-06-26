@@ -13,6 +13,7 @@ const {
 	updateAllHostFamilyId,
 	getAllHost,
 	updateAllHostFamilyNameAndFamilyBtecIdByFamilyId,
+	updateHostSalary,
 } = require('../controllers/tableController');
 
 router.route('/tables').get(getTables);
@@ -47,5 +48,8 @@ router.route('/hosts').get(getAllHost);
 router
 	.route('/update/host/family')
 	.put(updateAllHostFamilyNameAndFamilyBtecIdByFamilyId);
+
+// update host salary
+router.route('/update/host/salary/:id').put(updateHostSalary);
 
 module.exports = router;

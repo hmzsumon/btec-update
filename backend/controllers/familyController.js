@@ -192,3 +192,83 @@ exports.updateUserSalary = catchAsyncErrors(async (req, res, next) => {
 		massage: 'Update success',
 	});
 });
+
+// update user salary by id
+exports.updateUserSalaryById = catchAsyncErrors(async (req, res, next) => {
+	const userId = req.params.id;
+
+	// find user by _id
+	const agent = await User.findById(userId);
+	if (!agent) {
+		return next(new ErrorHander('User not found with this ID', 404));
+	}
+
+	// get all host salary_info.receive_coin >=1200000
+	const hosts = await Host.find({ family_id: agent.id });
+	if (!hosts) {
+		return next(new ErrorHander('Host not found with this ID', 404));
+	}
+
+	let base_pay = 0;
+	let salary = 0;
+	let extra_bonus = 0;
+	let receive_coins = 0;
+	let extra_coins = 0;
+	let total_hosts = 0;
+	let host_salary = 0;
+	let success_hosts = 0;
+	let target_coins = 0;
+	let agentHost = [];
+
+	// get salary
+	for (let j = 0; j < hosts.length; j++) {
+		const host = hosts[j];
+
+		base_pay += host.salary_info.merchant_pay;
+		salary += host.salary_info.merchant_total;
+		host_salary += host.salary_info.grosSalary;
+		extra_bonus += host.salary_info.merchant_extra;
+		receive_coins += host.receive_coin;
+		extra_coins += host.salary_info.extra;
+		total_hosts += 1;
+		success_hosts += host.is_target ? 1 : 0;
+		target_coins += host.salary_info.target_point;
+		agentHost.push(host._id);
+
+		// console.log('===========================');
+		// console.log('ID: ', user.id);
+		// console.log('Ticket: ', user.ticket);
+		// console.log('Salary: ', salary);
+		// console.log('Gros Salary: ', grosSalary);
+		// console.log('===========================');
+	}
+
+	// update agent salary
+	agent.salary = salary;
+	agent.extra_bonus = extra_bonus;
+	agent.base_pay = base_pay;
+	agent.host_salary = host_salary;
+	agent.receive_coins = receive_coins;
+	agent.extra_coins = extra_coins;
+	agent.total_hosts = total_hosts;
+	agent.success_hosts = success_hosts;
+	agent.total_salary = salary + host_salary;
+	agent.hosts = agentHost;
+	agent.is_success = salary > 0 ? true : false;
+
+	console.log('===========================');
+	console.log('ID: ', agent.user_id);
+	console.log('Salary: ', agent.salary);
+	console.log('Extra: ', agent.extra);
+	console.log('Base Pay: ', agent.base_pay);
+	console.log(' Host Salary: ', agent.host_salary);
+	console.log('==============================');
+	agent.save();
+
+	res.status(200).json({
+		success: true,
+		massage: 'Update success',
+	});
+
+	// salary: salary,
+});

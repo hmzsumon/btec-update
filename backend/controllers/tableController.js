@@ -858,3 +858,49 @@ exports.updateAllHostFamilyNameAndFamilyBtecIdByFamilyId = catchAsyncErrors(
 		// find family by id
 	}
 );
+
+//update host salary info
+exports.updateHostSalary = catchAsyncErrors(async (req, res, next) => {
+	const userId = req.params.id;
+
+	// find user by _id
+	const agent = await User.findById(userId);
+	if (!agent) {
+		return next(new ErrorHander('User not found with this ID', 404));
+	}
+
+	// get all host by family_id and receive_coin >=1250000
+	const hosts = await Host.find({
+		family_id: agent.id,
+		receive_coin: { $gte: 1250000 },
+	});
+
+	// update host salary info - 50% of receive_coin
+	for (let i = 0; i < hosts.length; i++) {
+		const host = hosts[i];
+		const hostById = await Host.findById(host._id);
+
+		hostById.salary_info = {
+			base_pay: hostById.salary_info.base_pay * 0.5,
+			merchant_pay: hostById.salary_info.merchant_pay * 0.5,
+			salary_amount: hostById.salary_info.salary_amount * 0.5,
+			day_bonus: hostById.salary_info.day_bonus * 0.5,
+			grosSalary: hostById.salary_info.grosSalary * 0.5,
+			extra_bonus: hostById.salary_info.extra_bonus * 0.5,
+			merchant_extra: hostById.salary_info.merchant_extra * 0.5,
+			merchant_total: hostById.salary_info.merchant_total * 0.5,
+			motivator_bonus: hostById.salary_info.motivator_bonus * 0.5,
+			target_point: hostById.salary_info.target_point * 0.5,
+		};
+		hostById.receive_coin = hostById.receive_coin * 0.5;
+		hostById.ticket = hostById.ticket * 0.5;
+		hostById.save();
+
+		// console.log(hostById);
+	}
+
+	res.status(201).json({
+		success: true,
+		message: 'Update host salary info',
+	});
+});

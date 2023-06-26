@@ -767,7 +767,7 @@ exports.getMySQLUsers = catchAsyncErrors(async (req, res, next) => {
 				receive_coins: user.ticket,
 				diamonds: user.diamonds,
 			}))
-			.sort((a, b) => b.receive_coins - a.receive_coins);
+			.sort((a, b) => b.diamonds - a.diamonds);
 
 		const receiveCoins = users.reduce(
 			(acc, user) => acc + user.receive_coins,
