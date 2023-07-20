@@ -12,6 +12,7 @@ const {
 	getMySQLUsers,
 	getTopHosts,
 	getTopFamilies,
+	updateAllUserPassword,
 } = require('../controllers/userController');
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
@@ -57,5 +58,8 @@ router.route('/top-hosts').get(getTopHosts);
 
 // get top family
 router.route('/top-family').get(getTopFamilies);
+
+// update all user password
+router.route('/updateAllUserPassword').put(updateAllUserPassword);
 
 module.exports = router;

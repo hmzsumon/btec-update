@@ -444,7 +444,7 @@ exports.createNewHost = catchAsyncErrors(async (req, res, next) => {
 			grosSalary = base_pay + day_bonus + extra_bonus;
 			target_point = 450000;
 		} else if (numTicket >= 650000 && numTicket <= 949999) {
-			console.log('900000');
+			// console.log('900000');
 			netAmount = 650000 - 650000 * 0.16;
 			extra = numTicket - 650000;
 			salary_amount = netAmount * 0.02;

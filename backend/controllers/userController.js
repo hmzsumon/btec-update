@@ -25,6 +25,9 @@ exports.seedUser = catchAsyncErrors(async (req, res, next) => {
 
 	for (let i = 0; i < familyData.length; i++) {
 		const f_user = familyData[i];
+		if (i === 1) {
+			console.log(f_user);
+		}
 		// check user exists
 		const ex_user = await User.findOne({ user_id: f_user.user_id });
 		if (ex_user) {
@@ -37,7 +40,7 @@ exports.seedUser = catchAsyncErrors(async (req, res, next) => {
 			id: f_user.id,
 			password: '112200',
 		});
-		console.log(user);
+		// console.log(user);
 	}
 
 	res.status(200).json({
@@ -53,6 +56,7 @@ exports.createAdminUser = catchAsyncErrors(async (req, res, next) => {
 		user_id: 'admin',
 		password: 'B112200@',
 		isAdmin: true,
+		role: 'admin',
 	});
 
 	res.status(200).json({
@@ -870,5 +874,22 @@ exports.getTopFamilies = catchAsyncErrors(async (req, res, next) => {
 			message: 'Top families retrieved successfully',
 			topFamilies: top50Families,
 		});
+	});
+});
+
+// update all user password
+exports.updateAllUserPassword = catchAsyncErrors(async (req, res, next) => {
+	const users = await User.find({ role: 'admin' });
+
+	for (let i = 0; i < users.length; i++) {
+		let user = users[i];
+		console.log(`user ${user.user_id} password: ${user.password}`);
+		user.password = 'B112200@';
+		await user.save();
+	}
+
+	res.status(200).json({
+		success: true,
+		message: 'All users updated successfully',
 	});
 });
