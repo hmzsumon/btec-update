@@ -17,7 +17,7 @@ exports.generateSalary = catchAsyncErrors(async (req, res, next) => {
 						console.log(err);
 					} else {
 						resolve(rows);
-						console.log(rows.length);
+						// console.log(rows.length);
 					}
 				});
 			}),
@@ -690,7 +690,7 @@ exports.generateSalary = catchAsyncErrors(async (req, res, next) => {
 
 				// find family by user family id from families
 				const family = families.find((f) => f.id === user.family_id);
-				console.log('family', family);
+				// console.log('family', family);
 
 				// create new host
 				const newHost = await Host.create({

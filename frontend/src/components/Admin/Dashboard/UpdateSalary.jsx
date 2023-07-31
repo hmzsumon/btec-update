@@ -71,7 +71,7 @@ const UpdateSalary = () => {
 							>
 								<button
 									className='bg-[#ffeb3b] hover:bg-[#c5b104] disabled:cursor-not-allowed font-semibold text-slate-700 py-2 rounded-md'
-									disabled={isLoading}
+									disabled={isLoading || f_loading}
 									onClick={() => updateUserSalary()}
 								>
 									{isLoading ? (
@@ -82,10 +82,10 @@ const UpdateSalary = () => {
 								</button>
 								<button
 									className='bg-[#ffeb3b] hover:bg-[#c5b104] disabled:cursor-not-allowed font-semibold text-slate-700 py-2 rounded-md'
-									disabled={f_loading}
+									disabled={f_loading || isLoading}
 									onClick={() => updateFamilySalary()}
 								>
-									{isLoading ? (
+									{f_loading ? (
 										<BeatLoader color='#000' size={10} />
 									) : (
 										'Update Family Salary'

@@ -2,6 +2,7 @@ import { FiUsers } from 'react-icons/fi';
 import { MdOutlineDashboard, MdPassword } from 'react-icons/md';
 import { FaCoins } from 'react-icons/fa';
 import { GrUserFemale } from 'react-icons/gr';
+import { GrCurrency } from 'react-icons/gr';
 
 const sideMenuItems = [
 	{
@@ -58,7 +59,7 @@ const sideMenuItems = [
 	{
 		id: 13,
 		name: 'Update Salary',
-		icon: <MdPassword />,
+		icon: <GrCurrency />,
 		path: '/admin/update-Salary',
 		role: 'all',
 	},

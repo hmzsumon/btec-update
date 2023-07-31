@@ -175,13 +175,13 @@ exports.updateUserSalary = catchAsyncErrors(async (req, res, next) => {
 		agent.hosts = agentHost;
 		agent.is_success = salary > 0 ? true : false;
 
-		console.log('===========================');
-		console.log('ID: ', agent.user_id);
-		console.log('Salary: ', agent.salary);
-		console.log('Extra: ', agent.extra);
-		console.log('Base Pay: ', agent.base_pay);
-		console.log(' Host Salary: ', agent.host_salary);
-		console.log('==============================');
+		// console.log('===========================');
+		// console.log('ID: ', agent.user_id);
+		// console.log('Salary: ', agent.salary);
+		// console.log('Extra: ', agent.extra);
+		// console.log('Base Pay: ', agent.base_pay);
+		// console.log(' Host Salary: ', agent.host_salary);
+		// console.log('==============================');
 		agent.save();
 
 		// console.log('id:', user.user_id, 'userHost: ', userHost.length);
