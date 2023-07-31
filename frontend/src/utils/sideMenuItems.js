@@ -55,6 +55,13 @@ const sideMenuItems = [
 		path: '/admin/update-password',
 		role: 'all',
 	},
+	{
+		id: 13,
+		name: 'Update Salary',
+		icon: <MdPassword />,
+		path: '/admin/update-Salary',
+		role: 'all',
+	},
 	// {
 	// 	id: 6,
 	// 	name: 'Shares',

@@ -65,6 +65,22 @@ export const adminApi = apiSlice.injectEndpoints({
 			providesTags: ['Coins'],
 		}),
 
+		// update user salary
+		updateUserSalary: builder.mutation({
+			query: () => ({
+				url: '/host/salary',
+				method: 'PUT',
+			}),
+		}),
+
+		// update family salary
+		updateFamilySalary: builder.mutation({
+			query: () => ({
+				url: '/update/family/salary',
+				method: 'PUT',
+			}),
+		}),
+
 		// top 50 host
 		getTop50HostAdmin: builder.query({
 			query: () => '/top-hosts',
@@ -92,4 +108,6 @@ export const {
 	useGetCoinsAdminQuery,
 	useGetTop50HostAdminQuery,
 	useGetTop50FamilyAdminQuery,
+	useUpdateUserSalaryMutation,
+	useUpdateFamilySalaryMutation,
 } = adminApi;
