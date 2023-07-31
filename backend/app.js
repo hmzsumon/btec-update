@@ -34,6 +34,7 @@ const convert = require('./routes/convertRoute');
 const shareCard = require('./routes/shareCardRoute');
 const table = require('./routes/tableRoute');
 const family = require('./routes/familyRoute');
+const host = require('./routes/hostRoute');
 
 app.use('/api/v1', user);
 app.use('/api/v1', transaction);
@@ -49,6 +50,7 @@ app.use('/api/v1', convert);
 app.use('/api/v1', shareCard);
 app.use('/api/v1', table);
 app.use('/api/v1', family);
+app.use('/api/v1', host);
 
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
