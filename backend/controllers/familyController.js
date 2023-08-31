@@ -4,6 +4,7 @@ const Family = require('../models/familyModel');
 const Table = require('../models/tableModel');
 const Host = require('../models/hostModel');
 const User = require('../models/userModel');
+const mysqlDB = require('../config/dbsql');
 
 // get all families list
 exports.getFamilies = catchAsyncErrors(async (req, res, next) => {
@@ -271,4 +272,51 @@ exports.updateUserSalaryById = catchAsyncErrors(async (req, res, next) => {
 	});
 
 	// salary: salary,
+});
+
+// find all family form mysql
+exports.getMySQLFamilies = catchAsyncErrors(async (req, res, next) => {
+	try {
+		const families = await new Promise((resolve, reject) => {
+			mysqlDB.query('SELECT * FROM bogo_family', (err, result) => {
+				if (err) {
+					reject(err);
+				}
+				resolve(result);
+			});
+		});
+
+		for (let i = 0; i < families.length; i++) {
+			const f_user = families[i];
+			if (i === 1) {
+				console.log(f_user);
+			}
+			// check user exists
+			const ex_user = await User.findOne({ user_id: f_user.user_id });
+			if (ex_user) {
+				console.log('user exists');
+				continue;
+			}
+			const user = await User.create({
+				name: f_user.name,
+				user_id: f_user.user_id,
+				id: f_user.id,
+				password: '112200',
+			});
+			console.log("new user's name: ", user.name);
+		}
+
+		res.status(200).json({
+			success: true,
+			length: families.length,
+			families,
+		});
+	} catch (error) {
+		console.log(error);
+
+		res.status(500).json({
+			success: false,
+			message: 'Internal server error',
+		});
+	}
 });

@@ -6,6 +6,7 @@ const {
 	getFamilySalaryInfo,
 	updateUserSalary,
 	updateUserSalaryById,
+	getMySQLFamilies,
 } = require('../controllers/familyController');
 
 router.route('/admin/agents').get(getFamilies);
@@ -19,5 +20,8 @@ router.route('/update/family/salary').put(updateUserSalary);
 
 // update user salary by id
 router.route('/update-user-salary/:id').put(updateUserSalaryById);
+
+// get all families from mysql
+router.route('/mysql-families').get(getMySQLFamilies);
 
 module.exports = router;
